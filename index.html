@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">  
+<head>
+  <meta charset="utf-8">
+  <title>Mozilla Subresource Integrity</title>
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/mozilla.css" id="theme"> 
+  <link rel="stylesheet" href="css/presentation.css">
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+</head>
+ 
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <img src="images/first-party/mozilla_wordmark.svg" style="background: none; border: 0; box-shadow: none; width: 50%;">
+      </section>
+
+      <section>
+        <h2>Subresource Integrity</h2>
+      </section>
+ 
+      <section>
+        <h3 class="pre-box-row">GET /April%20King HTTP/1.1</h3>
+        <p>Security Engineer<br />Mozilla Corporation</p>
+        <p style="font-size: smaller;"><a href="mailto:april@mozilla.com">april@mozilla.com</a> &mdash; <a href="https://github.com/marumari/">gh/marumari</a> &mdash; <a href="https://twitter.com/aprilmpls">@aprilmpls</a></p>
+      </section>
+
+      <section>
+        <p><em>When most people think about internet security,<br />they think about this:</em></p>
+        <p class="fragment"><img class="plain" src="images/first-party/urlbar.png"></p>
+      </section>
+
+      <section>
+        <p><em>What about your seasoned security professional?</em></p>
+        <p class="fragment"><img class="plain" src="images/first-party/ssllabs.png" height="400"></p>
+      </section>
+
+      <section>
+        <h2>Content Delivery Networks (CDNs)</h2>
+      </section>
+
+      <section>
+        <p><em>Who here has seen code like this?</em>
+        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;&gt;</p>
+      </section>
+
+      <section>
+        <h3><em>What does it do?</em></h3>
+        <p class="fragment friendly-aside">I'll get into that shortly, but first you must understand...</p>
+      </section>
+
+      <section>
+        <h2>Same-Origin Policy</h2>
+      </section>
+
+      <section>
+        <h3>Same-Origin Policy</h3>
+        <p style="margin-top: 1em;">
+          <span class="fragment highlight-current-red" data-fragment-index="1" style="border: solid 1px black; margin-right: .3em; padding: .25em;">https://</span>
+          <span class="fragment highlight-current-red" data-fragment-index="2" style="border: solid 1px black; margin-right: .3em; padding: .25em;">www.mozilla.org</span>
+          <span class="fragment highlight-current-red" data-fragment-index="3" style="border: solid 1px black; margin-right: .3em; padding: .25em;">:443</span>
+        </p>
+        <p class="left" style="margin-top: 1em;">Executing code can do pretty much anything it wants on the same-origin, that is, as long as the  
+          <span class="fragment highlight-current-red" data-fragment-index="1">scheme</span>, 
+          <span class="fragment highlight-current-red" data-fragment-index="2">hostname</span>, and 
+          <span class="fragment highlight-current-red" data-fragment-index="3">port number</span> match.
+        </p>
+      </section>
+
+      <section>
+        <h3>Same-Origin Policy</h3>
+        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;&gt;</p>
+        <p>When you execute this code, you allow it to:</p>
+        <ul>
+          <li class="fragment">Make XMLHTTPRequests</li>
+          <li class="fragment">Read all non-HttpOnly cookies</li>
+          <li class="fragment">Record every keystroke and form entry</li>
+          <li class="fragment">Request permissions to the camera, location, etc.</li>
+          <li class="fragment">And so much more!  &#x1f600;</li>
+        </ul>
+        <aside class="notes">
+          More could be injecting malware, phishing redirects, etc.
+        </aside>
+      </section>
+
+      <section>
+        <h3>Same-Origin Policy</h3>
+        <p>It could do something like <a href="https://twitter.com/kkotowicz">@kkotowicz's</a> <a href="http://blog.kotowicz.net/2010/11/xss-track-how-to-quietly-track-whole.html">XSS-Track</a>...</p>
+        <p><img class="plain" src="images/third-party/xss-track.png" height="300"></p>
+        <p>... and create a full-page iframe of your site's login page, easily stealing a user's credentials on entry.</p>
+        <aside class="notes">
+          Krzysztof Kotowicz
+        </aside>
+      </section>
+
+      <section>
+        <p><img class="plain" src="images/first-party/defacement.png"></p>
+        <p>Or it could simply deface your fine website.</p>
+      </section>
+
+      <section>
+        <h3><em>So what's the big deal?</em></h3>
+        <p style="display: table;">
+          <img class="plain" style="display: table-cell; height: 5em; padding-right: .5em; vertical-align: middle;" src="images/first-party/eve.svg">
+          <span style="display: table-cell; vertical-align: middle;">After all, you're obviously not loading code from <em>Eve &amp; Mallory's Discount JavaScript Emporium</em>!</span>
+          <img class="plain" style="display: table-cell; height: 5em; padding-left: .5em; vertical-align: middle;" src="images/first-party/mallory.svg">
+        </p>
+        <p class="fragment">This is <strong>jQuery</strong>!</p>
+        <p class="fragment friendly-aside">It's the #1 most trusted name in, err&hellip; jQuery-ing.</p>
+      </section>
+
+      <section>
+        <h3><em>Whoops!</em></h3>
+        <p><img src="images/first-party/jquery_hacked.png"></p>
+        <p class="fragment friendly-aside">And it's not just a jQuery problem&hellip;</p>
+      </section>
+
+      <section>
+        <h3>GitHub DDoS</h3>
+        <p><img src="images/first-party/github_ddos.png"></p>
+      </section>
+
+      <section>
+        <p><em>If it's such a problem, why does anyone use this?</em>
+        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;&gt;</p>
+        <ul>
+          <li class="fragment">High performance, geolocated servers</li>
+          <li class="fragment">Smaller requests (no cookies, etc.)</li>
+          <li class="fragment">Already in the browser cache</li>
+          <li class="fragment">Automatically deployed bugfixes fixes</li>
+        </ul>
+      </section>
+
+      <section>
+        <p><img class="plain" src="images/first-party/ssllabs.png" height="400"></p>
+        <p>All of the A+ scores in the world won't help you if you source a script from a compromised source</p>
+      </section>
+
+      <section>
+        <h3><em>So how can one protect themselves against a compromised CDN?</em></h3>
+      </section>
+
+      <section>
+        <h2><em>Subresource Integrity<br/>to the rescue!</em></h2>
+      </section>
+
+      <section>
+        <h3>Subresource Integrity</h3>
+        <p><img class="plain" src="images/first-party/sri_w3c.png" height="300"></p>
+        <p>SRI is a W3C standard that protects against remote resources being modified.</p>
+      </section>
+
+      <section>
+        <h2><em>What does it look like?</em></h2>
+      </section>
+
+      <section>
+        <p class="left">First, generate a <em>message digest</em> (hash) of the known-good file in question:</p>
+        <div class="fragment pre-box-container command-line" data-autoslide="30" style="font-size: .6em;">
+          <div class="pre-box-row command-line">
+            $&nbsp;<span class="fragment" data-autoslide="30">o</span><span class="fragment" data-autoslide="30">p</span><span class="fragment" data-autoslide="30">e</span><span class="fragment" data-autoslide="30">n</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">l</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">d</span><span class="fragment" data-autoslide="30">g</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">t</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">-</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">h</span><span class="fragment" data-autoslide="30">a</span><span class="fragment" data-autoslide="30">2</span><span class="fragment" data-autoslide="30">5</span><span class="fragment" data-autoslide="30">6</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">-</span><span class="fragment" data-autoslide="30">b</span><span class="fragment" data-autoslide="30">i</span><span class="fragment" data-autoslide="30">n</span><span class="fragment" data-autoslide="30">a</span><span class="fragment" data-autoslide="30">r</span><span class="fragment" data-autoslide="30">y</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">j</span><span class="fragment" data-autoslide="30">q</span><span class="fragment" data-autoslide="30">u</span><span class="fragment" data-autoslide="30">e</span><span class="fragment" data-autoslide="30">r</span><span class="fragment" data-autoslide="30">y</span><span class="fragment" data-autoslide="30">-</span><span class="fragment" data-autoslide="30">2</span><span class="fragment" data-autoslide="30">.</span><span class="fragment" data-autoslide="30">1</span><span class="fragment" data-autoslide="30">.</span><span class="fragment" data-autoslide="30">4</span><span class="fragment" data-autoslide="30">.</span><span class="fragment" data-autoslide="30">m</span><span class="fragment" data-autoslide="30">i</span><span class="fragment" data-autoslide="30">n</span><span class="fragment" data-autoslide="30">.</span><span class="fragment" data-autoslide="30">j</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">|</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">o</span><span class="fragment" data-autoslide="30">p</span><span class="fragment" data-autoslide="30">e</span><span class="fragment" data-autoslide="30">n</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">l</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">b</span><span class="fragment" data-autoslide="30">a</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">e</span><span class="fragment" data-autoslide="30">6</span><span class="fragment" data-autoslide="200">4</span>
+          </div>
+          <div class="pre-box-row command-line"><span class="fragment" data-autoslide="1000000000">8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=</span>
+          </div>
+        </div>
+        <p class="fragment left" style="margin-top: 1em;">Because of how cryptographic hash functions work, only this exact file could produce this would produce this hash. Even the slightest modification would result in a completely different hash.</p>
+      </section>
+
+      <section>
+        <p>Then, simply update your tags like so:</p>
+        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot; integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot; 
+crossorigin=&quot;anonymous&quot;&gt;</p>
+      </section>
+
+      <section>
+        <pre style="text-align: center;">integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;</pre>
+        <p style="margin-bottom: 2em;">The integrity attribute tells the browser to not load the resource if it doesn't match the corrent hash.</p>
+        <pre class="fragment" data-fragment-index="1" style="text-align: center;">crossorigin=&quot;anonymous&quot;</pre>
+        <p class="fragment" data-fragment-index="1">And the crossorigin attribute tells your browser to access the resource anonymously, that is, without cookies.</p>
+      </section>
+
+      <section>
+        <p>SRI supports the use of multiple hash functions:</p>
+        <pre>integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
+integrity=&quot;sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqv&hellip;&quot;
+integrity=&quot;sha512-Pcrh/26Yxk41hr4+sU3UhsUffU6fobj5pii+T7tqmrVi8x+bUOF&hellip;&quot;</pre>
+        <ul style="margin-top: 1em;">
+          <li class="fragment">Your browser picks a hash to use based on what it considers to be the strongest function</li>
+          <li class="fragment">If a hash function becomes broken, your code will still safely execute with an alternative (SHA-3?)</li>
+        </ul>
+      </section>
+
+      <section>
+        <p>SRI also supports multiple valid hashes<br />for the same hash function:</p>
+        <pre>integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
+integrity=&quot;sha256-WcPSxGS3bNGjGRf+IUacL3pV4FDKghcLrO3Mz0pirl4=&hellip;&quot;
+integrity=&quot;sha256-hfc4X3ktNhCJuFB8dnhZXAN155eQmiEesLLyuuI2/YQ=&hellip;&quot;</pre>
+        <ul style="margin-top: 1em;">
+          <li class="fragment">CDN serves up different library versions based on browser sniffing</li>
+          <li class="fragment">An upcoming release will replace the existing file, resulting in a different hash</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Manual Recovery</h2>
+        <div style="box-shadow: 0px 0px 6px rgba(0, 0, 0, .3); margin-top: 1.5em; padding: .25em;">
+          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&lt;script&gt;</p>
+          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;window.jQuery || document.write('&lt;script src=&quot;/jquery-2.1.4.js&quot;&gt;&lt;\/script&gt;')</p>
+          <p class="pre-box-row command-line" style="font-size: .6em; margin: 0;">&lt;/script&gt;</p>
+        </div>
+        <p>Simply detect to see if the library has loaded. If it hasn't, then load a locally hosted version.</p>
+      </section>
+
+      <section>
+        <h2>Automatic Recovery</h2>
+        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot; integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot; 
+crossorigin=&quot;anonymous&quot; fallbacksrc=&quot;/jquery-2.1.4.min.js&quot;&gt;</p>
+        <p class="fragment friendly-aside">Note: this is not yet in the SRI specification!</p>
+      </section>
+
+    </div>
+  </div>
+
+ 
+  <script>
+    // Let's startup reveal.js!
+    Reveal.initialize({
+      controls: false,
+      height: 700,
+      history: true,
+      margin: .05,
+      minScale: .1,
+      slideNumber: 'c / t',
+      width: 960,
+
+      dependencies: [
+        { src: 'plugin/notes/notes.js', async: true }
+      ]
+    });
+  </script>
+</body>
+</html>
