@@ -192,15 +192,15 @@ integrity=&quot;sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqv&hellip;&q
 integrity=&quot;sha512-Pcrh/26Yxk41hr4+sU3UhsUffU6fobj5pii+T7tqmrVi8x+bUOF&hellip;&quot;</pre>
         <ul style="margin-top: 1em;">
           <li class="fragment">Your browser picks a hash to use based on what it considers to be the strongest function</li>
-          <li class="fragment">If a hash function becomes broken, your code will still safely execute with an alternative (SHA-3?)</li>
+          <li class="fragment">If a hash function becomes broken, your page will still safely load by using an alternative (SHA-3?)</li>
         </ul>
       </section>
 
       <section>
         <p>SRI also supports multiple valid hashes<br />for the same hash function:</p>
-        <pre>integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
-integrity=&quot;sha256-WcPSxGS3bNGjGRf+IUacL3pV4FDKghcLrO3Mz0pirl4=&hellip;&quot;
-integrity=&quot;sha256-hfc4X3ktNhCJuFB8dnhZXAN155eQmiEesLLyuuI2/YQ=&hellip;&quot;</pre>
+        <pre style="text-align: center;">integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
+integrity=&quot;sha256-WcPSxGS3bNGjGRf+IUacL3pV4FDKghcLrO3Mz0pirl4=&quot;
+integrity=&quot;sha256-hfc4X3ktNhCJuFB8dnhZXAN155eQmiEesLLyuuI2/YQ=&quot;</pre>
         <ul style="margin-top: 1em;">
           <li class="fragment">CDN serves up different library versions based on browser sniffing</li>
           <li class="fragment">An upcoming release will replace the existing file, resulting in a different hash</li>
@@ -227,9 +227,13 @@ crossorigin=&quot;anonymous&quot;
       </section>
 
       <section>
-        <h2><em>Hold your horses!</em></h2>
+        <h2><em>Zoinks!</em></h2>
         <p>Didn't you say earlier that you can only execute code on foreign origins, not read it? So how can you compute the hash if you can't read the content?</p>
-        <p class="fragment friendly-aside" style="margin-top: 1.5em;">Drats! I would have gotten away with it,<br />if it wasn't for you meddling security professionals!</p>
+        <p style="display: table;">
+          <img class="plain" style="display: table-cell; height: 4em; padding-right: .5em; vertical-align: middle;" src="images/third-party/Velma_Dinkley.png">
+          <span class="friendly-aside" style="display: table-cell; vertical-align: middle;">Drats! I would have gotten away with it, if it wasn't for you meddling security professionals!</span>
+          <img class="plain" style="display: table-cell; height: 4em; padding-left: .5em; vertical-align: middle;" src="images/third-party/Fred_Jones.png">
+        </p>
       </section>
 
       <section>
