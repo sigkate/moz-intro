@@ -317,3 +317,6 @@ body {
 
 .fragment.highlight-current-green.current-fragment {
   color: #1fb26b !important; }
+
+pre {
+  padding: .25em !important; }

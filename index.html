@@ -34,7 +34,8 @@
 
       <section>
         <p><em>What about your seasoned security professional?</em></p>
-        <p class="fragment"><img class="plain" src="images/first-party/ssllabs.png" height="400"></p>
+        <p class="fragment" data-fragment-index="1"><img class="plain" src="images/first-party/ssllabs.png" height="400"></p>
+        <p class="fragment friendly-aside" data-fragment-index="1">A+ on <a href="https://www.ssllabs.com/">SSL Labs</a>? Time to call it a day!</p>
       </section>
 
       <section>
@@ -67,6 +68,7 @@
           <span class="fragment highlight-current-red" data-fragment-index="2">hostname</span>, and 
           <span class="fragment highlight-current-red" data-fragment-index="3">port number</span> match.
         </p>
+        <p class="left">If it's not on the same origin, you can execute code, but not read it.</p>
       </section>
 
       <section>
@@ -77,7 +79,7 @@
           <li class="fragment">Make XMLHTTPRequests</li>
           <li class="fragment">Read all non-HttpOnly cookies</li>
           <li class="fragment">Record every keystroke and form entry</li>
-          <li class="fragment">Request permissions to the camera, location, etc.</li>
+          <li class="fragment">Abuse permissions to the camera, location, etc.</li>
           <li class="fragment">And so much more!  &#x1f600;</li>
         </ul>
         <aside class="notes">
@@ -86,18 +88,18 @@
       </section>
 
       <section>
-        <h3>Same-Origin Policy</h3>
-        <p>It could do something like <a href="https://twitter.com/kkotowicz">@kkotowicz's</a> <a href="http://blog.kotowicz.net/2010/11/xss-track-how-to-quietly-track-whole.html">XSS-Track</a>...</p>
-        <p><img class="plain" src="images/third-party/xss-track.png" height="300"></p>
-        <p>... and create a full-page iframe of your site's login page, easily stealing a user's credentials on entry.</p>
-        <aside class="notes">
-          Krzysztof Kotowicz
-        </aside>
+        <p><img class="plain" src="images/first-party/defacement.png"></p>
+        <p>It could simply deface your fine website.</p>
       </section>
 
       <section>
-        <p><img class="plain" src="images/first-party/defacement.png"></p>
-        <p>Or it could simply deface your fine website.</p>
+        <h3>Same-Origin Policy</h3>
+        <p>Or it could do something like <a href="https://twitter.com/kkotowicz">@kkotowicz's</a> <a href="http://blog.kotowicz.net/2010/11/xss-track-how-to-quietly-track-whole.html">XSS-Track</a>...</p>
+        <p><img class="plain" src="images/third-party/xss-track.png" height="300"></p>
+        <p>... and create a full-page iframe of your site's login page, easily stealing a user's credentials upon entry.</p>
+        <aside class="notes">
+          Krzysztof Kotowicz
+        </aside>
       </section>
 
       <section>
@@ -149,7 +151,7 @@
       <section>
         <h3>Subresource Integrity</h3>
         <p><img class="plain" src="images/first-party/sri_w3c.png" height="300"></p>
-        <p>SRI is a W3C standard that protects against remote resources being modified.</p>
+        <p>SRI is a W3C standard that protects against remote resources that have been tampered with.</p>
       </section>
 
       <section>
@@ -170,8 +172,10 @@
 
       <section>
         <p>Then, simply update your tags like so:</p>
-        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot; integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot; 
-crossorigin=&quot;anonymous&quot;&gt;</p>
+        <pre>&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;
+<span class="red">integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
+crossorigin=&quot;anonymous&quot;</span>&gt;</pre>
+        <p class="friendly-aside">Note: SRI also works with &lt;link&gt; tags!</p>
       </section>
 
       <section>
@@ -215,9 +219,109 @@ integrity=&quot;sha256-hfc4X3ktNhCJuFB8dnhZXAN155eQmiEesLLyuuI2/YQ=&hellip;&quot
 
       <section>
         <h2>Automatic Recovery</h2>
-        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot; integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot; 
-crossorigin=&quot;anonymous&quot; fallbacksrc=&quot;/jquery-2.1.4.min.js&quot;&gt;</p>
-        <p class="fragment friendly-aside">Note: this is not yet in the SRI specification!</p>
+        <pre>&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;
+integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
+crossorigin=&quot;anonymous&quot;
+<span class="red">fallbacksrc=&quot;/jquery-2.1.4.js&quot;</span>&gt;</pre>
+        <p class="friendly-aside">Note: this is not yet in the SRI specification!</p>
+      </section>
+
+      <section>
+        <h2><em>Hold your horses!</em></h2>
+        <p>Didn't you say earlier that you can only execute code on foreign origins, not read it? So how can you compute the hash if you can't read the content?</p>
+        <p class="fragment friendly-aside" style="margin-top: 1.5em;">Drats! I would have gotten away with it,<br />if it wasn't for you meddling security professionals!</p>
+      </section>
+
+      <section>
+        <p>Imagine a wifi router on a foreign origin<br />that returns the following page to a logged-in user:</p>
+<pre>{
+  "user": "admin",
+  "password": "pass1234"
+}</pre>
+        <p class="fragment left" style="margin-top: 1em;">In such a case, an XSS attack could calculate the hashes for thousands of passwords, set the integrity attribute, and keep trying to load the resource until it succeeds.</p>
+      </section>
+
+      <section>
+        <p>Luckily for us, there's a solution to this conundrum/quagmire/disaster/apocolypse.</p>
+      </section>
+
+      <section>
+        <pre style="font-size: .8em;">Access-Control-Allow-Origin: *</pre>
+        <p class="left">Access-Control-Allow-Origin (CORS) is a header that servers can set that allows foreign origins to read the contents of pages.</p>
+      </section>
+
+      <section>
+        <p>CDNs are hosting public content, so there is no risk<br />of a foreign origin reading their contents.</p>
+        <p class="fragment" style="margin-top: 2em;">If the server doesn't set the CORS header,<br />the integrity check will automatically fail.</p>
+        <p class="fragment friendly-aside" style="margin-top: 2em;">&#x1f389; Good news: most CDNs are already setting this header! &#x1f389;</p>
+      </section>
+
+      <section>
+        <p>Is SRI intended for HTTP or HTTPS sites?</p>
+        <table style="font-size: .8em;">
+          <tr>
+            <th>Origin</th>
+            <th>Resource</th>
+            <th>Notes</th>
+          </tr>
+          <tr>
+            <td>HTTP</td>
+            <td>HTTP</td>
+            <td>Prevents MitM/CDN on foreign request only</td>
+          </tr>
+          <tr>
+            <td>HTTP</td>
+            <td>HTTPS</td>
+            <td>Prevents MitM/CDN on foreign request only</td>
+          </tr>
+          <tr>
+            <td>HTTPS</td>
+            <td>HTTP</td>
+            <td>Blocked due to mixed content</td>
+          </tr>
+          <tr>
+            <td>HTTPS</td>
+            <td>HTTPS</td>
+            <td>Yes! &#x1f60d;</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>SRI Support</h2>
+        <p class="friendly-aside" style="margin-top: -.7em;">as of November 2015</p>
+        <ul>
+          <li class="fragment">Browsers: Firefox 43, Chrome 45/46, Opera 32</li>
+          <li class="fragment">CDNs: Google APIs, Bootstrap, jQuery, etc.</li>
+          <li class="fragment">Toolchains: node.js, Sprockets (Rails), etc.</li>
+        </ul>
+        <p class="fragment friendly-aside"><a href="https://srihash.org/">SRIHash.org</a> can take any URL and generate the proper script tags for you!</p>
+      </section>
+
+      <section>
+        <h2>Future of SRI</h2>
+        <ul>
+          <li class="fragment">Automatic failover via fallbacksrc</li>
+          <li class="fragment">Support for other types of resources</li>
+          <li class="fragment">Error reporting via Content-Security-Policy (CSP)</li>
+          <li class="fragment">Support for other cryptographic hash functions</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Feedback on SRI</h2>
+        <ul>
+          <li>Issues @ <a href="https://github.com/w3c/webappsec-subresource-integrity/">gh/w3c/webappsec-subresource-integrity</a></li>
+          <li>IRC @ irc.mozilla.org #security<br />&nbsp;&nbsp;&nbsp;(freddyb, francois, April)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Conclusion</h2>
+      </section>
+
+      <section>
+        <h1 style="font-size: 8em;"><strong>?</strong></h1>
       </section>
 
     </div>
