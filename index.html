@@ -211,7 +211,11 @@ integrity=&quot;sha256-hfc4X3ktNhCJuFB8dnhZXAN155eQmiEesLLyuuI2/YQ=&quot;</pre>
         <h2>Manual Recovery</h2>
         <div style="box-shadow: 0px 0px 6px rgba(0, 0, 0, .3); margin-top: 1.5em; padding: .25em;">
           <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&lt;script&gt;</p>
-          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;window.jQuery || document.write('&lt;script src=&quot;/jquery-2.1.4.min.js&quot;&gt;&lt;\/script&gt;')</p>
+          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;window.jQuery || (function() {</p>
+          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;var lib = document.createElement(&#39;script&#39;);</p>
+          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;lib.src = &#39;/assets/js/jquery-2.1.4.min.js&#39;;</p>
+          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;document.head.appendChild(lib);</p>
+          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;})();</p>
           <p class="pre-box-row command-line" style="font-size: .6em; margin: 0;">&lt;/script&gt;</p>
         </div>
         <p>Simply detect to see if the library has loaded. If it hasn't, then load a locally hosted version.</p>
