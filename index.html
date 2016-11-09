@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="css/presentation.css">
   <script src="lib/js/head.min.js"></script>
   <script src="js/reveal.js"></script>
+  <style>
+    tt { font-family: monospace !important; }
+  </style>
 </head>
  
 <body>
@@ -22,8 +25,8 @@
       </section>
  
       <section>
-        <h3 class="pre-box-row">GET /April%20King HTTP/1.1</h3>
-        <p>Security Engineer<br />Mozilla Corporation</p>
+        <h3 class="pre-box-row">GET /April%20King HTTP/2.0</h3>
+        <p>Staff Security Engineer<br />Mozilla Corporation</p>
         <p style="font-size: smaller;"><a href="mailto:april@mozilla.com">april@mozilla.com</a> &mdash; <a href="https://github.com/marumari/">gh/marumari</a> &mdash; <a href="https://twitter.com/aprilmpls">@aprilmpls</a></p>
       </section>
 
@@ -44,7 +47,7 @@
 
       <section>
         <p><em>Who here has seen code like this?</em>
-        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;&gt;</p>
+        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-3.1.1.min.js&quot;&gt;</p>
       </section>
 
       <section>
@@ -73,7 +76,7 @@
 
       <section>
         <h3>Same-Origin Policy</h3>
-        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;&gt;</p>
+        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-3.1.1.min.js&quot;&gt;</p>
         <p>When you execute this code, you allow it to:</p>
         <ul>
           <li class="fragment">Make XMLHTTPRequests</li>
@@ -126,12 +129,11 @@
 
       <section>
         <p><em>If it's such a problem, why does anyone use this?</em>
-        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;&gt;</p>
+        <p class="pre-box-row" style="font-size: .7em;">&lt;script src=&quot;https://code.jquery.com/jquery-3.1.1.min.js&quot;&gt;</p>
         <ul>
           <li class="fragment">High performance, geolocated servers</li>
           <li class="fragment">Smaller requests (no cookies, etc.)</li>
           <li class="fragment">Already in the browser cache</li>
-          <li class="fragment">Automatically deployed bugfixes fixes</li>
         </ul>
       </section>
 
@@ -151,7 +153,7 @@
       <section>
         <h3>Subresource Integrity</h3>
         <p><img class="plain" src="images/first-party/sri_w3c.png" height="300"></p>
-        <p>SRI is a W3C standard that protects against remote resources that have been tampered with.</p>
+        <p>SRI is a W3C standard that protects from remote resources being tampered with.</p>
       </section>
 
       <section>
@@ -161,21 +163,24 @@
       <section>
         <p class="left">First, generate a <em>message digest</em> (hash) of the known-good file in question:</p>
         <div class="fragment pre-box-container command-line" data-autoslide="30" style="font-size: .6em;">
-          <div class="pre-box-row command-line">
-            $&nbsp;<span class="fragment" data-autoslide="30">o</span><span class="fragment" data-autoslide="30">p</span><span class="fragment" data-autoslide="30">e</span><span class="fragment" data-autoslide="30">n</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">l</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">d</span><span class="fragment" data-autoslide="30">g</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">t</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">-</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">h</span><span class="fragment" data-autoslide="30">a</span><span class="fragment" data-autoslide="30">2</span><span class="fragment" data-autoslide="30">5</span><span class="fragment" data-autoslide="30">6</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">-</span><span class="fragment" data-autoslide="30">b</span><span class="fragment" data-autoslide="30">i</span><span class="fragment" data-autoslide="30">n</span><span class="fragment" data-autoslide="30">a</span><span class="fragment" data-autoslide="30">r</span><span class="fragment" data-autoslide="30">y</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">j</span><span class="fragment" data-autoslide="30">q</span><span class="fragment" data-autoslide="30">u</span><span class="fragment" data-autoslide="30">e</span><span class="fragment" data-autoslide="30">r</span><span class="fragment" data-autoslide="30">y</span><span class="fragment" data-autoslide="30">-</span><span class="fragment" data-autoslide="30">2</span><span class="fragment" data-autoslide="30">.</span><span class="fragment" data-autoslide="30">1</span><span class="fragment" data-autoslide="30">.</span><span class="fragment" data-autoslide="30">4</span><span class="fragment" data-autoslide="30">.</span><span class="fragment" data-autoslide="30">m</span><span class="fragment" data-autoslide="30">i</span><span class="fragment" data-autoslide="30">n</span><span class="fragment" data-autoslide="30">.</span><span class="fragment" data-autoslide="30">j</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">|</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">o</span><span class="fragment" data-autoslide="30">p</span><span class="fragment" data-autoslide="30">e</span><span class="fragment" data-autoslide="30">n</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">l</span><span class="fragment" data-autoslide="30">&nbsp;</span><span class="fragment" data-autoslide="30">b</span><span class="fragment" data-autoslide="30">a</span><span class="fragment" data-autoslide="30">s</span><span class="fragment" data-autoslide="30">e</span><span class="fragment" data-autoslide="30">6</span><span class="fragment" data-autoslide="200">4</span>
-          </div>
-          <div class="pre-box-row command-line"><span class="fragment" data-autoslide="1000000000">8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=</span>
+          <div class="pre-box-row command-line fragment">
+            $&nbsp;openssl dgst -sha256 -binary jquery-3.1.1.min.js | openssl base64<br>
+            8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=
           </div>
         </div>
         <p class="fragment left" style="margin-top: 1em;">Because of how cryptographic hash functions work, only this exact file could produce this would produce this hash. Even the slightest modification would result in a completely different hash.</p>
       </section>
 
       <section>
-        <p>Then, simply update your tags like so:</p>
-        <pre>&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;
+        <p style="margin-top: 1em;">Then, simply update your tags like so:</p>
+        <pre>&lt;script src=&quot;https://code.jquery.com/jquery-3.1.1.min.js&quot;
 <span class="red">integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
 crossorigin=&quot;anonymous&quot;</span>&gt;</pre>
         <p class="friendly-aside">Note: SRI also works with &lt;link&gt; tags!</p>
+        <p class="fragment" style="font-weight: 600; margin-top: 2em; margin-bottom: -.1em;" data-fragment-index="1">
+          So easy, it's practically magic!
+          <div class="fragment" style="font-size: 2em;" data-fragment-index="1"><div style="display: inline-block; transform: rotate(-180deg);">&#x1f3a9;</div> &#x1f4a5; &#x2728; &#x2728; &#x1f430;</div>
+        </p>
       </section>
 
       <section>
@@ -191,7 +196,7 @@ crossorigin=&quot;anonymous&quot;</span>&gt;</pre>
 integrity=&quot;sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqv&hellip;&quot;
 integrity=&quot;sha512-Pcrh/26Yxk41hr4+sU3UhsUffU6fobj5pii+T7tqmrVi8x+bUOF&hellip;&quot;</pre>
         <ul style="margin-top: 1em;">
-          <li class="fragment">Your browser picks a hash to use based on what it considers to be the strongest function</li>
+          <li class="fragment">Your browser picks a hash to use based on what it considers to be the strongest hash function</li>
           <li class="fragment">If a hash function becomes broken, your page will still safely load by using an alternative (SHA-3?)</li>
         </ul>
       </section>
@@ -208,27 +213,36 @@ integrity=&quot;sha256-hfc4X3ktNhCJuFB8dnhZXAN155eQmiEesLLyuuI2/YQ=&quot;</pre>
       </section>
 
       <section>
-        <h2>Manual Recovery</h2>
+        <h2>Recovery</h2>
         <div style="box-shadow: 0px 0px 6px rgba(0, 0, 0, .3); margin-top: 1.5em; padding: .25em;">
           <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&lt;script&gt;</p>
           <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;window.jQuery || (function() {</p>
           <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;var lib = document.createElement(&#39;script&#39;);</p>
-          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;lib.src = &#39;/assets/js/jquery-2.1.4.min.js&#39;;</p>
+          <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;lib.src = &#39;/assets/js/jquery-3.1.1.min.js&#39;;</p>
           <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;&nbsp;&nbsp;document.head.appendChild(lib);</p>
           <p class="pre-box-row command-line" style="font-size: .7em; margin: 0;">&nbsp;&nbsp;})();</p>
           <p class="pre-box-row command-line" style="font-size: .6em; margin: 0;">&lt;/script&gt;</p>
         </div>
         <p>Simply detect to see if the library has loaded. If it hasn't, then load a locally hosted version.</p>
+        <p class="fragment">You can also bind to the tag's <tt>onError()</tt> event handler.</p>
       </section>
 
       <section>
+        <h2>Use with CSP</h2>
+        <p style="text-align: left;">Content Security Policy (CSP) is a header that your browser can send that defines what sources your browser is allowed to load.</p>
+        <p class="fragment"  style="text-align: left;" data-fragment-index="1">The <tt>require-sri-for</tt> directive can force browsers to require SRI for any scripts and/or styles that a page loads.
+          <pre class="fragment" style="font-size: .72em;" data-fragment-index="1">Content-Security-Policy: require-sri-for script style</pre>
+        </p>
+      </section>
+
+<!--       <section>
         <h2>Automatic Recovery</h2>
-        <pre>&lt;script src=&quot;https://code.jquery.com/jquery-2.1.4.min.js&quot;
+        <pre>&lt;script src=&quot;https://code.jquery.com/jquery-3.1.1.min.js&quot;
 integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
 crossorigin=&quot;anonymous&quot;
-<span class="red">fallbacksrc=&quot;/jquery-2.1.4.min.js&quot;</span>&gt;</pre>
+<span class="red">fallbacksrc=&quot;/jquery-3.1.1.min.js&quot;</span>&gt;</pre>
         <p class="friendly-aside">Note: this is not yet in the SRI specification and may never be! Stay tuned!</p>
-      </section>
+      </section> -->
 
       <section>
         <h2><em>Zoinks!</em></h2>
@@ -250,16 +264,19 @@ crossorigin=&quot;anonymous&quot;
       </section>
 
       <section>
-        <p>Luckily for us, there's a solution to this conundrum/quagmire/disaster/apocolypse.</p>
+        <img class="plain" style="width: 70%;" src="images/third-party/slight_apocalypse.jpg">
+        <p>Luckily for us, there's a solution to this conundrum/quagmire/disaster/apocalypse.</p>
       </section>
 
       <section>
         <pre style="font-size: .8em;">Access-Control-Allow-Origin: *</pre>
-        <p class="left">Access-Control-Allow-Origin (CORS) is a header that servers can set that allows foreign origins to read the contents of pages.</p>
+        <img class="plain" style="float: right; max-height: 8em; margin-top: .75em;" src="images/third-party/sharing_is_caring.png">
+        <p class="left" style="margin-top: 1.5em;"><tt>Access-Control-Allow-Origin</tt> is part of the <a href="https://www.w3.org/TR/access-control/">cross-origin resource sharing</a> (CORS) standard.<p>
+        <p class="left">Servers can set this header, allowing foreign origins to read the contents of their pages.</p>
       </section>
 
       <section>
-        <p>CDNs are hosting public content, so there is no risk<br />of a foreign origin reading their contents.</p>
+        <p>CDNs host public content, so there is no risk in allowing foreign origins to read their contents.</p>
         <p class="fragment" style="margin-top: 2em;">If the server doesn't set the CORS header,<br />the integrity check will automatically fail.</p>
         <p class="fragment friendly-aside" style="margin-top: 2em;">&#x1f389; Good news: most CDNs are already setting this header! &#x1f389;</p>
       </section>
@@ -297,7 +314,7 @@ crossorigin=&quot;anonymous&quot;
 
       <section>
         <h2>SRI Support</h2>
-        <p class="friendly-aside" style="margin-top: -.7em;">as of November 2015</p>
+        <p class="friendly-aside" style="margin-top: -.7em;">as of November 2016</p>
         <ul>
           <li class="fragment">Browsers: Firefox 43, Chrome 45/46, Opera 32</li>
           <li class="fragment">CDNs: Google APIs, Bootstrap, jQuery, etc.</li>
@@ -309,9 +326,8 @@ crossorigin=&quot;anonymous&quot;
       <section>
         <h2>Future of SRI</h2>
         <ul>
-          <li class="fragment">Automatic failover via fallbacksrc?</li>
           <li class="fragment">Support for other types of resources?</li>
-          <li class="fragment">Error reporting via Content-Security-Policy (CSP)?</li>
+          <li class="fragment">Error reporting</li>
           <li class="fragment">Support for other cryptographic hash functions?</li>
         </ul>
       </section>
@@ -320,7 +336,7 @@ crossorigin=&quot;anonymous&quot;
         <h2>Feedback on SRI</h2>
         <ul>
           <li>Issues @ <a href="https://github.com/w3c/webappsec-subresource-integrity/">gh/w3c/webappsec-subresource-integrity</a></li>
-          <li>IRC @ irc.mozilla.org #security<br />&nbsp;&nbsp;&nbsp;(freddyb, francois, April)</li>
+          <li>IRC @ irc.mozilla.org #contentsecurity<br />&nbsp;&nbsp;&nbsp;(freddyb, francois, April)</li>
         </ul>
       </section>
 
