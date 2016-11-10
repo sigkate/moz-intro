@@ -19,10 +19,6 @@
       <section>
         <img src="images/first-party/mozilla_wordmark.svg" style="background: none; border: 0; box-shadow: none; width: 50%;">
       </section>
-
-      <section>
-        <h2>Subresource Integrity</h2>
-      </section>
  
       <section>
         <h3 class="pre-box-row">GET /April%20King HTTP/2.0</h3>
@@ -31,7 +27,11 @@
       </section>
 
       <section>
-        <p><em>When most people think about internet security,<br />they think about this:</em></p>
+        <h2>Subresource Integrity</h2>
+      </section>
+
+      <section>
+        <p><em>When most people think about website security,<br />they think about this:</em></p>
         <p class="fragment"><img class="plain" src="images/first-party/urlbar.png"></p>
       </section>
 
@@ -61,17 +61,15 @@
 
       <section>
         <h3>Same-Origin Policy</h3>
-        <p style="margin-top: 1em;">
-          <span class="fragment highlight-current-red" data-fragment-index="1" style="border: solid 1px black; margin-right: .3em; padding: .25em;">https://</span>
-          <span class="fragment highlight-current-red" data-fragment-index="2" style="border: solid 1px black; margin-right: .3em; padding: .25em;">www.mozilla.org</span>
-          <span class="fragment highlight-current-red" data-fragment-index="3" style="border: solid 1px black; margin-right: .3em; padding: .25em;">:443</span>
+        <p class="left">Sites can retrieve and execute code from any origin, but not read its contents.</p>
+        <p class="fragment" style="margin-top: 1em;" data-fragment-index="1">
+          <span class="fragment highlight-current-red" data-fragment-index="2" style="border: solid 1px black; margin-right: .3em; padding: .25em;">https://</span>
+          <span class="fragment highlight-current-red" data-fragment-index="3" style="border: solid 1px black; margin-right: .3em; padding: .25em;">www.mozilla.org</span>
+          <span class="fragment highlight-current-red" data-fragment-index="4" style="border: solid 1px black; margin-right: .3em; padding: .25em;">:443</span>
         </p>
-        <p class="left" style="margin-top: 1em;">Executing code can do pretty much anything it wants on the same-origin, that is, as long as the  
-          <span class="fragment highlight-current-red" data-fragment-index="1">scheme</span>, 
-          <span class="fragment highlight-current-red" data-fragment-index="2">hostname</span>, and 
-          <span class="fragment highlight-current-red" data-fragment-index="3">port number</span> match.
-        </p>
-        <p class="left">If it's not on the same origin, you can execute code, but not read it.</p>
+        <p class="fragment left" data-fragment-index="1">And once that piece of code is executing, it can read the contents of the same-origin, that is, the <span class="fragment highlight-current-red" data-fragment-index="2">scheme</span>, 
+          <span class="fragment highlight-current-red" data-fragment-index="3">hostname</span>, and 
+          <span class="fragment highlight-current-red" data-fragment-index="4">port number</span> match.</p>
       </section>
 
       <section>
@@ -139,7 +137,7 @@
 
       <section>
         <p><img class="plain" src="images/first-party/ssllabs.png" height="400"></p>
-        <p>All of the A+ scores in the world won't help you if you source a script from a compromised source</p>
+        <p>All of the A+ scores in the world won't help you if you load a script from a compromised source</p>
       </section>
 
       <section>
@@ -192,9 +190,7 @@ crossorigin=&quot;anonymous&quot;</span>&gt;</pre>
 
       <section>
         <p>SRI supports the use of multiple hash functions:</p>
-        <pre>integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
-integrity=&quot;sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqv&hellip;&quot;
-integrity=&quot;sha512-Pcrh/26Yxk41hr4+sU3UhsUffU6fobj5pii+T7tqmrVi8x+bUOF&hellip;&quot;</pre>
+        <pre>integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=<br>           sha384-R4/ztc4ZlRqWjqIuvf6RX5yb/v90qNGx6fS48N0tRxiGkqv&hellip;<br>           sha512-Pcrh/26Yxk41hr4+sU3UhsUffU6fobj5pii+T7tqmrVi8x+bUOF&hellip;&quot;</pre>
         <ul style="margin-top: 1em;">
           <li class="fragment">Your browser picks a hash to use based on what it considers to be the strongest hash function</li>
           <li class="fragment">If a hash function becomes broken, your page will still safely load by using an alternative (SHA-3?)</li>
@@ -203,9 +199,7 @@ integrity=&quot;sha512-Pcrh/26Yxk41hr4+sU3UhsUffU6fobj5pii+T7tqmrVi8x+bUOF&helli
 
       <section>
         <p>SRI also supports multiple valid hashes<br />for the same hash function:</p>
-        <pre style="text-align: center;">integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
-integrity=&quot;sha256-WcPSxGS3bNGjGRf+IUacL3pV4FDKghcLrO3Mz0pirl4=&quot;
-integrity=&quot;sha256-hfc4X3ktNhCJuFB8dnhZXAN155eQmiEesLLyuuI2/YQ=&quot;</pre>
+        <pre style="text-align: center;">integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=<br>           sha256-WcPSxGS3bNGjGRf+IUacL3pV4FDKghcLrO3Mz0pirl4=<br>            sha256-hfc4X3ktNhCJuFB8dnhZXAN155eQmiEesLLyuuI2/YQ=&quot;</pre>
         <ul style="margin-top: 1em;">
           <li class="fragment">CDN serves up different library versions based on browser sniffing</li>
           <li class="fragment">An upcoming release will replace the existing file, resulting in a different hash</li>
@@ -229,24 +223,15 @@ integrity=&quot;sha256-hfc4X3ktNhCJuFB8dnhZXAN155eQmiEesLLyuuI2/YQ=&quot;</pre>
 
       <section>
         <h2>Use with CSP</h2>
-        <p style="text-align: left;">Content Security Policy (CSP) is a header that your browser can send that defines what sources your browser is allowed to load.</p>
+        <p style="text-align: left;">Content Security Policy (CSP) is a header that servers can send that defines what sources your browser is allowed to load.</p>
         <p class="fragment"  style="text-align: left;" data-fragment-index="1">The <tt>require-sri-for</tt> directive can force browsers to require SRI for any scripts and/or styles that a page loads.
           <pre class="fragment" style="font-size: .72em;" data-fragment-index="1">Content-Security-Policy: require-sri-for script style</pre>
         </p>
       </section>
 
-<!--       <section>
-        <h2>Automatic Recovery</h2>
-        <pre>&lt;script src=&quot;https://code.jquery.com/jquery-3.1.1.min.js&quot;
-integrity=&quot;sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw=&quot;
-crossorigin=&quot;anonymous&quot;
-<span class="red">fallbacksrc=&quot;/jquery-3.1.1.min.js&quot;</span>&gt;</pre>
-        <p class="friendly-aside">Note: this is not yet in the SRI specification and may never be! Stay tuned!</p>
-      </section> -->
-
       <section>
         <h2><em>Zoinks!</em></h2>
-        <p>Didn't you say earlier that you can only execute code on foreign origins, not read it? So how can you compute the hash if you can't read the content?</p>
+        <p>Didn't you say earlier that you can execute code on foreign origins, but not read it? So how can you compute the hash if you can't read the content?</p>
         <p style="display: table;">
           <img class="plain" style="display: table-cell; height: 4em; padding-right: .5em; vertical-align: middle;" src="images/third-party/Velma_Dinkley.png">
           <span class="friendly-aside" style="display: table-cell; vertical-align: middle;">Drats! I would have gotten away with it, if it wasn't for you meddling security professionals!</span>
@@ -260,7 +245,7 @@ crossorigin=&quot;anonymous&quot;
   "user": "admin",
   "password": "pass1234"
 }</pre>
-        <p class="fragment left" style="margin-top: 1em;">In such a case, an XSS attack could calculate the hashes for thousands of passwords, set the integrity attribute, and keep trying to load the resource until it succeeds.</p>
+        <p class="fragment left" style="margin-top: 1em;">In such a case, an XSS attack could calculate the hashes for thousands of passwords, set the integrity attribute, and keep trying to load the resource until it succeeded.</p>
       </section>
 
       <section>
@@ -271,13 +256,13 @@ crossorigin=&quot;anonymous&quot;
       <section>
         <pre style="font-size: .8em;">Access-Control-Allow-Origin: *</pre>
         <img class="plain" style="float: right; max-height: 8em; margin-top: .75em;" src="images/third-party/sharing_is_caring.png">
-        <p class="left" style="margin-top: 1.5em;"><tt>Access-Control-Allow-Origin</tt> is part of the <a href="https://www.w3.org/TR/access-control/">cross-origin resource sharing</a> (CORS) standard.<p>
-        <p class="left">Servers can set this header, allowing foreign origins to read the contents of their pages.</p>
+        <p class="left" style="margin-top: 1.5em;"><tt>Access-Control-Allow-Origin</tt> (ACAO) is part of the <a href="https://www.w3.org/TR/access-control/">cross-origin resource sharing</a> (CORS) standard.<p>
+        <p class="left">Servers can set this header, opting in to allow foreign origins to read the contents of their pages.</p>
       </section>
 
       <section>
         <p>CDNs host public content, so there is no risk in allowing foreign origins to read their contents.</p>
-        <p class="fragment" style="margin-top: 2em;">If the server doesn't set the CORS header,<br />the integrity check will automatically fail.</p>
+        <p class="fragment" style="margin-top: 2em;">If the server doesn't set the ACAO header,<br />the integrity check will automatically fail.</p>
         <p class="fragment friendly-aside" style="margin-top: 2em;">&#x1f389; Good news: most CDNs are already setting this header! &#x1f389;</p>
       </section>
 
